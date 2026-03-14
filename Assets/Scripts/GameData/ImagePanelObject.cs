@@ -1,9 +1,5 @@
-using System.IO;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.PlayerSettings;
 
 public class ImagePanelObject : PanelObject {
     Texture2D texture = new Texture2D(2,2);
@@ -40,10 +36,6 @@ public class ImagePanelObject : PanelObject {
         image.texture = texture;
     }
 
-    private GameObject createObject() {
-        GameObject obj = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Panel.prefab", typeof(GameObject));
-        return Object.Instantiate(obj, Vector3.zero, Quaternion.identity);
-    }
 
     public override void Deserialize(Packet pPacket) {
        Texture2D tex = new Texture2D(2,2);

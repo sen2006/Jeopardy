@@ -38,6 +38,7 @@ public class EditorImageButton : MonoBehaviour {
 
     private void TryLoadImage() {
         string path = textInputField.text;
+        path = path.Replace("\"", "");
         if (File.Exists(path)) {
             byte[] bytes = File.ReadAllBytes(path);
             Texture2D tex = new Texture2D(2, 2);

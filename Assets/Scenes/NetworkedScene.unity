@@ -165,9 +165,9 @@ GameObject:
   m_Component:
   - component: {fileID: 104676489}
   - component: {fileID: 104676488}
-  - component: {fileID: 104676490}
-  - component: {fileID: 104676491}
+  - component: {fileID: 104676493}
   - component: {fileID: 104676492}
+  - component: {fileID: 104676491}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -215,18 +215,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &104676490
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 104676486}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5c476fd9733ed148b4631bd99c76108, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &104676491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,6 +249,18 @@ MonoBehaviour:
   _dedicatedServer: 0
   _peerToPeer: 1
   _address: 127.0.0.1
+--- !u!114 &104676493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104676486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a95b1c3eb0dc2b46a0b5e7ab3693e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NetworkStarter
 --- !u!1 &168556155
 GameObject:
   m_ObjectHideFlags: 0
@@ -1395,9 +1395,9 @@ MonoBehaviour:
   categoryPrefab: {fileID: 1861499163146384262, guid: 004ac12839a263b47ac19c568bd3903e, type: 3}
   buttonPrefab: {fileID: 2270110916990081039, guid: fe5bf8d49712f6b45bacd5a72d106d3f, type: 3}
   playerCardPrefab: {fileID: 1060268000052681763, guid: 32215a25f41619e489e9f85b6369f0fb, type: 3}
-  steamIDStorage: {fileID: 1257197416}
   playerObjects: {fileID: 1461960334}
   playerObjectsPlayMode: {fileID: 1387216287}
+  buzzer: {fileID: 342155127}
   forceHost: 0
   forcePlayer: 0
 --- !u!4 &1257197415
@@ -2315,7 +2315,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0.000030517578, y: -418.6506}
+  m_AnchoredPosition: {x: 751, y: 530}
   m_SizeDelta: {x: 358.171, y: 67.15698}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2003757975
@@ -2365,6 +2365,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1257197414}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: ReturnFromPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1257197414}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: ResetBuzzers
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

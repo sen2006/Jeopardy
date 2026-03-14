@@ -1,8 +1,10 @@
 using PurrNet;
-using PurrNet.Steam;
 using Steamworks;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class GameManager : NetworkBehaviour, IPanelLoader {
     // runs 90% on the server
@@ -26,15 +28,16 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
     [SerializeField] GameObject buttonPrefab;
     [SerializeField] GameObject playerCardPrefab;
 
-    [SerializeField] SteamIDStorage steamIDStorage;
-
     QuestionData currentlyLoadedQuestion;
     int selectedQuestionPanelIndex = 0;
-    int selectedBoardIdex = 0;
+    int selectedBoardIndex = 0;
+    static List<PlayerID> buzzedPlayers = new();
+    List<QuestionData> usedButtons = new(); //(board, w, h)
 
     [Header("Player Stuff")]
     [SerializeField] GameObject playerObjects;
     [SerializeField] GameObject playerObjectsPlayMode;
+    [SerializeField] Button buzzer;
 
     [Header("Debuging")]
     [SerializeField] bool forceHost = false;
@@ -101,33 +104,53 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
         BuzzRPC();
     }
 
-    /*[ServerRpc]
-    private void BuzzRPC(RPCInfo info = default) {
-        PlayerID buzzerPlayer = info.sender;
-        Debug.Log(buzzerPlayer.id + " buzzed");
-    }*/
-
     [ObserversRpc]
     private void BuzzRPC(RPCInfo info = default) {
-        if (isGameGost()) { 
-            
-        } else { 
-            
-        }
         PlayerID buzzerPlayer = info.sender;
 
-        CSteamID steamId = new CSteamID((ulong)buzzerPlayer.id);
-        string playerName = SteamFriends.GetFriendPersonaName(steamId);
+        if (isGameGost()) {
+            if (!buzzedPlayers.Contains(buzzerPlayer)) {
+                buzzedPlayers.Add(buzzerPlayer);
+                LockBuzzer(info.sender);
+                //TODO: Play Buzz Sound on all clients
+            }
+        }
+        
+        string playerName = SteamFriends.GetFriendPersonaName(new CSteamID((ulong)buzzerPlayer.id));
 
-        Debug.Log(buzzerPlayer.id + " buzzed");
-        Debug.Log(playerName + " buzzed");
+        Debug.Log(SteamIDStorage.playerNames[buzzerPlayer] + " buzzed");
+    }
+
+    [TargetRpc]
+    private void LockBuzzer(PlayerID target) {
+        buzzer.interactable = false;
+    }
+
+    [ObserversRpc]
+    private void UnlockBuzzers() {
+        buzzer.interactable = true;
+    }
+
+    public static bool HasBuzzed(PlayerID player) {
+        return buzzedPlayers.Contains(player);
+    }
+
+    public static int GetBuzzedPlace(PlayerID player) {
+        return buzzedPlayers.IndexOf(player);
+    }
+
+    public void ResetBuzzers() {
+        buzzedPlayers.Clear();
+        UnlockBuzzers();
     }
 
     /** Game Host Stuff
      */
 
     public void ReturnFromPanel() {
-        OpenBoard(selectedBoardIdex);
+        OpenBoard(selectedBoardIndex);
+        currentlyLoadedQuestion = null;
+        selectedQuestionPanelIndex = 0;
     }
 
     public void OpenBoard(int index) {
@@ -143,14 +166,17 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
         }
 
         foreach (PlayerID player in networkManager.players) {
-            //TODO: skip host
+            if (player == networkManager.localPlayer) continue;
+
+
             try {
                 GameObject card = Instantiate(playerCardPrefab, playerCardParent.transform);
                 PlayerScoreCard cardData = card.GetComponent<PlayerScoreCard>();
 
                 cardData.SetCash(GameData.GetStartingCash());
-                cardData.SetName(steamIDStorage.playerNames[player]);
-                cardData.SetImage(steamIDStorage.playerAvatars[player]);
+                cardData.SetName(SteamIDStorage.playerNames[player]);
+                cardData.SetImage(SteamIDStorage.playerAvatars[player]);
+                cardData.LinkPlayer(player);
             } catch { }
         }
     }
@@ -162,15 +188,21 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
         while (w < width) {
             GameObject newCategory = Instantiate(categoryPrefab, Vector3.zero, Quaternion.identity);
             newCategory.transform.SetParent(gameBoardRenderParent.transform);
+            newCategory.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = PersistentBoardSave.GetGameData().GetBoard(selectedBoardIndex).GetCategory(w).GetName();
             newCategory.transform.localScale = Vector3.one;
             int h = 0;
             while (h < height) {
                 GameObject newButton = Instantiate(buttonPrefab, Vector3.zero, Quaternion.identity);
-                newButton.transform.SetParent(newCategory.transform);
+                newButton.transform.SetParent(newCategory.transform.GetChild(0));
                 PanelButton panelButton = newButton.GetComponent<PanelButton>();
-                panelButton.setQuestion(board.getQuestionFor(w, h));
+                QuestionData question = board.getQuestionFor(w, h);
+
+                panelButton.setQuestion(question);
                 panelButton.setPanelLoader(this);
-                panelButton.setCashText(board.getQuestionFor(w, h).cashAmount);
+                panelButton.setCashText(question.cashAmount);
+                if (usedButtons.Contains(question)) {
+                    panelButton.GetComponent<Image>().color = Color.gray;
+                }
                 panelButton.transform.localScale = Vector3.one;
                 h++;
             }
@@ -198,9 +230,11 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
         selectedQuestionPanelIndex = 0;
         loadPanel(data.getPanel(0));
         currentlyLoadedQuestion = data;
+        usedButtons.Add(data);
     }
 
     private void GetNextPanelInQuestion() {
+        if (currentlyLoadedQuestion == null) return;
         selectedQuestionPanelIndex++;
         if (selectedQuestionPanelIndex >= currentlyLoadedQuestion.GetPanelCount()) {
             selectedQuestionPanelIndex = currentlyLoadedQuestion.GetPanelCount() - 1;
@@ -209,6 +243,7 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
     }
 
     private void GetPreviosPanelInQuestion() {
+        if (currentlyLoadedQuestion == null) return;
         selectedQuestionPanelIndex--;
         if (selectedQuestionPanelIndex < 0) {
             selectedQuestionPanelIndex = 0;

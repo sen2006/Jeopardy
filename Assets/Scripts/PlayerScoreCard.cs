@@ -1,3 +1,4 @@
+using PurrNet;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,9 +8,11 @@ public class PlayerScoreCard : MonoBehaviour
     [SerializeField] int cash = 0;
     [SerializeField] TextMeshProUGUI nameText;
     [SerializeField] TextMeshProUGUI score;
+    [SerializeField] TextMeshProUGUI buzzerCountDisplay;
     [SerializeField] RawImage image;
     [SerializeField] Button increaseCash;
     [SerializeField] Button decreaseCash;
+    PlayerID playerID;
 
     private void Start() {
         increaseCash.onClick.AddListener(addCashOnClick);
@@ -18,6 +21,11 @@ public class PlayerScoreCard : MonoBehaviour
 
     private void Update() {
         score.text = cash + "$";
+        if (GameManager.HasBuzzed(playerID)) {
+            buzzerCountDisplay.text = (GameManager.GetBuzzedPlace(playerID)+1) + "";
+        } else {
+            buzzerCountDisplay.text = "";
+        }
     }
 
     public void SetName(string name) {
@@ -42,5 +50,9 @@ public class PlayerScoreCard : MonoBehaviour
 
     private void removeCashOnClick() {
         cash -= 100;
+    }
+
+    public void LinkPlayer(PlayerID id) {
+        playerID = id;
     }
 }
