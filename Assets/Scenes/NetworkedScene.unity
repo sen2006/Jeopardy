@@ -1649,7 +1649,7 @@ MonoBehaviour:
   playerObjectsPlayMode: {fileID: 1387216287}
   buzzer: {fileID: 342155127}
   forceHost: 0
-  forcePlayer: 0
+  forcePlayer: 1
 --- !u!4 &1257197415
 Transform:
   m_ObjectHideFlags: 0
