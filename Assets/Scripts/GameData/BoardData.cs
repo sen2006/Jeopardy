@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class BoardData : IByteSerialization {
+public class BoardData : ISaveSerialization<BoardSaveData> {
     [SerializeField]
     List<CategoryData> categories = new List<CategoryData>();
     public QuestionData getQuestionFor(int boardX, int boardY) {
@@ -24,19 +24,11 @@ public class BoardData : IByteSerialization {
         return longest;
     }
 
-    public void Deserialize(Packet pPacket) {
-        categories = pPacket.ReadList<CategoryData>();
-    }
-
-    public void Serialize(Packet pPacket) {
-        pPacket.WriteList(categories);
-    }
-
-    internal void loadToScene(GameObject renderParent) {
+    public void loadToScene(GameObject renderParent) {
         throw new NotImplementedException();
     }
 
-    internal void SetupPanels(int width, int height) {
+    public void SetupPanels(int width, int height) {
         categories = new List<CategoryData>();
         int w = 0;
         while (w < width) {
@@ -48,11 +40,23 @@ public class BoardData : IByteSerialization {
         }
     }
 
-    internal CategoryData GetCategory(int index) {
+    public CategoryData GetCategory(int index) {
         return categories[index];
+    }
+
+
+    public BoardSaveData Save() {
+        BoardSaveData saveData = new BoardSaveData();
+        saveData.categories = ISaveSerialization<CategorySaveData>.ConvertListToSave(categories);
+        return saveData;
+    }
+
+    public void Load(BoardSaveData saveData) {
+        categories = ISaveSerialization<CategorySaveData>.ConvertListFromSave<CategoryData>(saveData.categories, typeof(CategoryData)); ;
     }
 }
 
+[Serializable]
 public struct BoardSaveData {
-    public List<CategoryData> categories;
+    public List<CategorySaveData> categories;
 }

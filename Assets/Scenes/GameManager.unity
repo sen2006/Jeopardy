@@ -4125,6 +4125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f40853505e1fe040bc04bbcc978f391, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  gameData:
+    boards: []
   boardRenderParent: {fileID: 1672583580}
   panelRenderParent: {fileID: 1555242088}
   boardEditorButtons: {fileID: 974774057}
@@ -5087,7 +5089,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 10
+  m_Spacing: 35
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1

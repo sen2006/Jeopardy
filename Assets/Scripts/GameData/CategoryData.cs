@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
-public class CategoryData : IByteSerialization {
+public class CategoryData : ISaveSerialization<CategorySaveData> {
     string name = "";
     List<QuestionData> questions = new List<QuestionData>();
     public static int defautlCashAmount = 100;
@@ -22,21 +23,29 @@ public class CategoryData : IByteSerialization {
         return questions.Count;
     }
 
-    public void Deserialize(Packet pPacket) {
-        name = pPacket.ReadString();
-        questions = pPacket.ReadList<QuestionData>();
-    }
-
-    public void Serialize(Packet pPacket) {
-        pPacket.Write(name);
-        pPacket.WriteList(questions);
-    }
-
-    internal void SetName(string name) {
+    public void SetName(string name) {
         this.name = name;
     }
 
-    internal string GetName() {
+    public string GetName() {
         return name;
     }
+
+    public CategorySaveData Save() {
+        CategorySaveData save = new CategorySaveData();
+        save.name = name;
+        save.questions = ISaveSerialization<QuestionSaveData>.ConvertListToSave(questions);
+        return save;    
+    }
+
+    public void Load(CategorySaveData saveData) {
+        name = saveData.name;
+        questions = ISaveSerialization<QuestionSaveData>.ConvertListFromSave<QuestionData>(saveData.questions, typeof(QuestionData));
+    }
+}
+
+[Serializable]
+public struct CategorySaveData {
+    public string name;
+    public List<QuestionSaveData> questions;
 }

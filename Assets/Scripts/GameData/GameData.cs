@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
-public class GameData : IByteSerialization {
+public class GameData : ISaveSerialization<GameSaveData> {
     [SerializeField]
-    readonly List<BoardData> boards = new List<BoardData>();
+    List<BoardData> boards = new List<BoardData>();
     
     public BoardData AddNewBoard() {
         BoardData board = new BoardData();
@@ -32,15 +31,6 @@ public class GameData : IByteSerialization {
         return boards.Count; 
     }
 
-    public void Deserialize(Packet pPacket) {
-        boards.Clear();
-        boards.AddRange(pPacket.ReadList<BoardData>());
-    }
-
-    public void Serialize(Packet pPacket) {
-        pPacket.WriteList(boards);
-    }
-
     internal void loadBoard(GameObject renderParent, int index) {
         boards[index].loadToScene(renderParent);
     }
@@ -52,4 +42,22 @@ public class GameData : IByteSerialization {
     internal static int GetStartingCash() {
         return 0;
     }
+
+    public GameSaveData Save() {
+        GameSaveData saveData = new GameSaveData();
+
+        List<BoardSaveData> boardSave = ISaveSerialization<BoardSaveData>.ConvertListToSave(boards);
+
+        saveData.boards = boardSave;
+        return saveData;
+    }
+
+    public void Load(GameSaveData saveData) {
+        boards = ISaveSerialization<BoardSaveData>.ConvertListFromSave<BoardData>(saveData.boards, typeof(BoardData));
+    }
+}
+
+[Serializable]
+public struct GameSaveData {
+    public List<BoardSaveData> boards;
 }

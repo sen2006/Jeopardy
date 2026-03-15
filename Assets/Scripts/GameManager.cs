@@ -18,6 +18,7 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
     [SerializeField] GameObject hostObjectsPlayMode;
     [SerializeField] GameObject gameBoardRenderParent;
     [SerializeField] GameObject gamePanelRenderParent;
+    [SerializeField] GameObject nextGamePanelRenderParent;
     [SerializeField] GameObject playerCardParent;
 
     [SerializeField] GameObject panelButtons;
@@ -27,6 +28,8 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
     [SerializeField] GameObject categoryPrefab;
     [SerializeField] GameObject buttonPrefab;
     [SerializeField] GameObject playerCardPrefab;
+
+    [SerializeField] BuzzerSounds soundHandeler;
 
     QuestionData currentlyLoadedQuestion;
     int selectedQuestionPanelIndex = 0;
@@ -92,6 +95,9 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
             OpenBoard(0);
             CreatePlayerCards();
             boardButtons.SetActive(true);
+            if (Display.displays.Length > 1) {
+                Display.displays[1].Activate();
+            }
         }
     }
 
@@ -99,8 +105,6 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
     /// called by client pressing buzzer
     /// </summary>
     public void Buzz() {
-        //if (isGameGost()) throw new System.Exception("Buzzed as Host");
-        //TODO: check if buzzer is locked
         BuzzRPC();
     }
 
@@ -111,14 +115,19 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
         if (isGameGost()) {
             if (!buzzedPlayers.Contains(buzzerPlayer)) {
                 buzzedPlayers.Add(buzzerPlayer);
-                LockBuzzer(info.sender);
-                //TODO: Play Buzz Sound on all clients
+                LockBuzzer(buzzerPlayer);
+                PlayBuzzAudio(SteamIDStorage.playerSteamIDs[buzzerPlayer]);
             }
         }
         
         string playerName = SteamFriends.GetFriendPersonaName(new CSteamID((ulong)buzzerPlayer.id));
 
         Debug.Log(SteamIDStorage.playerNames[buzzerPlayer] + " buzzed");
+    }
+
+    [ObserversRpc]
+    private void PlayBuzzAudio(ulong steamID, RPCInfo info = default) {
+        soundHandeler.PlayBuzzSound(steamID);
     }
 
     [TargetRpc]
@@ -151,6 +160,9 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
         OpenBoard(selectedBoardIndex);
         currentlyLoadedQuestion = null;
         selectedQuestionPanelIndex = 0;
+        foreach (Transform child in nextGamePanelRenderParent.transform) {
+            Destroy(child.gameObject);
+        }
     }
 
     public void OpenBoard(int index) {
@@ -226,9 +238,19 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
         boardButtons.SetActive(false);
     }
 
+    public void loadNextPanel(PanelData panelData) {
+        foreach (Transform child in nextGamePanelRenderParent.transform) {
+            Destroy(child.gameObject);
+        }
+        panelData.loadToScene(nextGamePanelRenderParent);
+    }
+
     public void setLoadedQeastion(QuestionData data) {
         selectedQuestionPanelIndex = 0;
         loadPanel(data.getPanel(0));
+        if (data.GetPanelCount() > 1) {
+            loadNextPanel(data.getPanel(1));
+        }
         currentlyLoadedQuestion = data;
         usedButtons.Add(data);
     }
@@ -240,6 +262,8 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
             selectedQuestionPanelIndex = currentlyLoadedQuestion.GetPanelCount() - 1;
         }
         loadPanel(currentlyLoadedQuestion.getPanel(selectedQuestionPanelIndex));
+        if (currentlyLoadedQuestion.GetPanelCount() > selectedQuestionPanelIndex+1)
+            loadNextPanel(currentlyLoadedQuestion.getPanel(selectedQuestionPanelIndex+1));
     }
 
     private void GetPreviosPanelInQuestion() {
@@ -249,5 +273,7 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
             selectedQuestionPanelIndex = 0;
         }
         loadPanel(currentlyLoadedQuestion.getPanel(selectedQuestionPanelIndex));
+        if (currentlyLoadedQuestion.GetPanelCount() > selectedQuestionPanelIndex + 1)
+            loadNextPanel(currentlyLoadedQuestion.getPanel(selectedQuestionPanelIndex + 1));
     }
 }

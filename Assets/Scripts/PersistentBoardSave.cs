@@ -8,11 +8,8 @@ public static class PersistentBoardSave
 
     public static void LoadFromFile(string fileName) {
         string path = savePath + "/" + fileName + ".gameBoard";
-
-        Packet packet = new Packet(File.ReadAllBytes(path));
-        savedGameData = new GameData();
-        savedGameData.Deserialize(packet);
-        Debug.Log("Loaded From: " + savePath + "/" + fileName + ".gameBoard");
+        savedGameData = new();
+        savedGameData.Load(SaveSystem.Load(fileName));
     }
 
     public static GameData GetGameData() {

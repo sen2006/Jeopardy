@@ -21,6 +21,7 @@ public class MenuBoardLoadButton : MonoBehaviour
         } catch (Exception e) {
             PersistentBoardSave.ScrapSave();
             debugText.text = "Board Loaded :None\nBoard Not Found";
+            Debug.LogException(e);
         }
     }
 }

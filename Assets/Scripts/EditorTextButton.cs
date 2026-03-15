@@ -18,7 +18,7 @@ public class EditorTextButton : MonoBehaviour
     }
 
     private void CreateUI(string text) {
-        GameObject obj = new GameObject("TextField", typeof(RectTransform), typeof(TMP_InputField), typeof(EditorTextPanelObject), typeof(DragableUI));
+        GameObject obj = new GameObject("TextField", typeof(RectTransform), typeof(TMP_InputField), typeof(EditorTextPanelObject), typeof(DragableUI), typeof(UIWidthChange));
         GameObject textObj = new GameObject("Text", typeof(RectTransform), typeof(TextMeshProUGUI));
 
         obj.transform.SetParent(canvas.transform, false);
@@ -26,15 +26,16 @@ public class EditorTextButton : MonoBehaviour
 
         RectTransform rect = obj.GetComponent<RectTransform>();
         rect.anchoredPosition = Vector2.zero;
-        rect.sizeDelta = new Vector2(500, 125);
+        rect.sizeDelta = new Vector2(1000, 125);
 
         RectTransform rectText = textObj.GetComponent<RectTransform>();
         rectText.anchoredPosition = Vector2.zero;
-        rectText.sizeDelta = new Vector2(500, 125);
+        rectText.sizeDelta = new Vector2(1000, 125);
 
         textObj.GetComponent<TextMeshProUGUI>().fontSize = 100;
 
         TMP_InputField textInput = obj.GetComponent<TMP_InputField>();
+        textInput.lineType = TMP_InputField.LineType.MultiLineNewline;
         textInput.transition = Selectable.Transition.ColorTint;
         textInput.targetGraphic = textInput.GetComponent<RawImage>();
         
@@ -51,6 +52,7 @@ public class EditorTextButton : MonoBehaviour
 
         textInput.textComponent = textObj.GetComponent<TextMeshProUGUI>();
         textInput.textViewport = rect;
+        textInput.scrollSensitivity = 0;
         textInput.GetComponent<RawImage>().color = new Color(0, 0, 0, 0.2f);
 
 

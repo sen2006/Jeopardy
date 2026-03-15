@@ -134,25 +134,13 @@ public class GameBoardEditor : MonoBehaviour, IPanelLoader {
     }
 
     public void SaveToFile() {
-        string path = PersistentBoardSave.savePath + "/" + saveFileNameInput.text + ".gameBoard";
-
-        if (currentlyLoadedQuestion != null)
-            SavePanelToQuestion();
-        Packet packet = new Packet();
-        gameData.Serialize(packet);
-        if (!Directory.Exists(Path.GetDirectoryName(path)))
-            Directory.CreateDirectory(Path.GetDirectoryName(path));
-        File.WriteAllBytes(path, packet.GetBytes());
-        Debug.Log("Saved To: " + path);
+        GameSaveData save = gameData.Save();
+        SaveSystem.Save(saveFileNameInput.text, save);
         //ShowExplorer(saveFileNameInput.text);
     }
 
     public void LoadFromFile() {
-        string path = PersistentBoardSave.savePath + "/" + saveFileNameInput.text + ".gameBoard";
-
-        Packet packet = new Packet(File.ReadAllBytes(path));
-        gameData.Deserialize(packet);
-        Debug.Log("Loaded From: " + PersistentBoardSave.savePath +"/" + saveFileNameInput.text+".gameBoard");
+        gameData.Load(SaveSystem.Load(saveFileNameInput.text));
         OpenBoard(0);
     }
 

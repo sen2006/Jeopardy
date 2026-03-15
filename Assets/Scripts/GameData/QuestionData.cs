@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuestionData : IByteSerialization {
+public class QuestionData : ISaveSerialization<QuestionSaveData> {
     public int cashAmount { get; private set; }
     int ID = 0;
     static int lastID = 1;
@@ -26,16 +26,6 @@ public class QuestionData : IByteSerialization {
         cashAmount = cash;
     }
 
-    public void Deserialize(Packet pPacket) {
-        cashAmount = pPacket.ReadInt();
-        panels = pPacket.ReadList<PanelData>();
-    }
-
-    public void Serialize(Packet pPacket) {
-        pPacket.Write(cashAmount);
-        pPacket.WriteList(panels);
-    }
-
     internal PanelData getPanel(int index) {
         return panels[index];
     }
@@ -52,11 +42,29 @@ public class QuestionData : IByteSerialization {
         panels.Add(new PanelData());
     }
 
-    internal void RemovePanel(int index) {
+    public void RemovePanel(int index) {
         panels.RemoveAt(index);
     }
 
-    internal void ClearPanel(int index) {
+    public void ClearPanel(int index) {
         panels[index] = new PanelData();
     }
+
+    public QuestionSaveData Save() {
+        QuestionSaveData save = new QuestionSaveData();
+        save.cashAmount = cashAmount;
+        save.panels = ISaveSerialization<PanelSaveData>.ConvertListToSave(panels);
+        return save;
+    }
+
+    public void Load(QuestionSaveData saveData) {
+        cashAmount = saveData.cashAmount;
+        panels = ISaveSerialization<PanelSaveData>.ConvertListFromSave<PanelData>(saveData.panels, typeof(PanelData));
+    }
+}
+
+[Serializable]
+public struct QuestionSaveData {
+    public int cashAmount;
+    public List<PanelSaveData> panels;
 }

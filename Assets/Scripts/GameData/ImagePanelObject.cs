@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +11,6 @@ public class ImagePanelObject : PanelObject {
         obj.transform.SetParent(parent.transform, false);
 
         RectTransform rect = obj.GetComponent<RectTransform>();
-        rect.anchoredPosition = Vector2.zero;
         rect.localPosition = new Vector2(x, y);
         rect.sizeDelta = new Vector2(texture.width, texture.height);
         rect.localScale = new Vector2(xScale, yScale);
@@ -27,7 +27,6 @@ public class ImagePanelObject : PanelObject {
         obj.transform.SetParent(parent.transform, false);
 
         RectTransform rect = obj.GetComponent<RectTransform>();
-        rect.anchoredPosition = Vector2.zero;
         rect.localPosition = new Vector2(x, y);
         rect.sizeDelta = new Vector2(texture.width, texture.height);
         rect.localScale = new Vector2(xScale, yScale);
@@ -36,31 +35,40 @@ public class ImagePanelObject : PanelObject {
         image.texture = texture;
     }
 
-
-    public override void Deserialize(Packet pPacket) {
-       Texture2D tex = new Texture2D(2,2);
-        
-        x = pPacket.ReadFloat();
-        y = pPacket.ReadFloat();
-        xScale = pPacket.ReadFloat();
-        yScale = pPacket.ReadFloat();
-
-        byte[] bytes = pPacket.readByteArray();
-        tex = new Texture2D(2, 2);
-        tex.LoadImage(bytes);
-        texture = tex;
-    }
-
-    public override void Serialize(Packet pPacket) {
-        pPacket.Write(x);
-        pPacket.Write(y);
-        pPacket.Write(xScale);
-        pPacket.Write(yScale);
-        pPacket.WriteByteArray(texture.EncodeToPNG());
-    }
-
     public void SetTexture(Texture2D texture) {
         this.texture = texture;
+    }
+
+    public override PanelObjectSaveData Save() {
+        PanelObjectSaveData save = new();
+        save.aditionalStringData = new() {
+            TextureToBase64(texture)
+        };
+        save.x = x;
+        save.y = y;
+        save.xScale = xScale;
+        save.yScale = yScale;
+        return save;
+    }
+
+    public override void Load(PanelObjectSaveData saveData) {
+        texture = Base64ToTexture(saveData.aditionalStringData[0]);
+        x = saveData.x;
+        y = saveData.y;
+        xScale = saveData.xScale;
+        yScale = saveData.yScale;
+    }
+
+    public static string TextureToBase64(Texture2D texture) {
+        byte[] pngBytes = texture.EncodeToPNG();
+        return Convert.ToBase64String(pngBytes);
+    }
+
+    public static Texture2D Base64ToTexture(string base64) {
+        byte[] bytes = Convert.FromBase64String(base64);
+        Texture2D texture = new Texture2D(2, 2);
+        texture.LoadImage(bytes);
+        return texture;
     }
 }
 

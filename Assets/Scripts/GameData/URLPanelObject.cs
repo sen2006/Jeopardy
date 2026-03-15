@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,7 +14,6 @@ public class URLPanelObject : PanelObject {
         obj.transform.SetParent(parent.transform, false);
 
         RectTransform rect = obj.GetComponent<RectTransform>();
-        rect.anchoredPosition = Vector2.zero;
         rect.localPosition = new Vector2(x, y);
         rect.sizeDelta = new Vector2(500, 125);
         rect.localScale = new Vector2(xScale, yScale);
@@ -36,8 +36,9 @@ public class URLPanelObject : PanelObject {
         textObj.transform.SetParent(obj.transform, false);
 
         RectTransform rect = obj.GetComponent<RectTransform>();
-        rect.anchoredPosition = Vector2.zero;
+        rect.localPosition = new Vector2(x, y);
         rect.sizeDelta = new Vector2(500, 125);
+        rect.localScale = new Vector2(xScale, yScale);
 
         RectTransform rectText = textObj.GetComponent<RectTransform>();
         rectText.anchoredPosition = Vector2.zero;
@@ -69,26 +70,29 @@ public class URLPanelObject : PanelObject {
     }
 
 
-    public override void Deserialize(Packet pPacket) {
-       Texture2D tex = new Texture2D(2,2);
-        
-        x = pPacket.ReadFloat();
-        y = pPacket.ReadFloat();
-        xScale = pPacket.ReadFloat();
-        yScale = pPacket.ReadFloat();
-        URL = pPacket.ReadString();
-    }
-
-    public override void Serialize(Packet pPacket) {
-        pPacket.Write(x);
-        pPacket.Write(y);
-        pPacket.Write(xScale);
-        pPacket.Write(yScale);
-        pPacket.Write(URL);
-    }
-
     public void SetText(string text) {
         this.URL = text;
+    }
+
+    public override PanelObjectSaveData Save() {
+        PanelObjectSaveData save = new();
+
+        save.aditionalStringData = new() {
+            URL
+        };
+        save.x = x;
+        save.y = y;
+        save.xScale = xScale;
+        save.yScale = yScale;
+        return save;
+    }
+
+    public override void Load(PanelObjectSaveData saveData) {
+        URL = saveData.aditionalStringData[0];
+        x = saveData.x;
+        y = saveData.y;
+        xScale = saveData.xScale;
+        yScale = saveData.yScale;
     }
 }
 
