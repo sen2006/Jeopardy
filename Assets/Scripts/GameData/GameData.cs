@@ -31,15 +31,11 @@ public class GameData : ISaveSerialization<GameSaveData> {
         return boards.Count; 
     }
 
-    internal void loadBoard(GameObject renderParent, int index) {
-        boards[index].loadToScene(renderParent);
-    }
-
-    internal string GetGameName() {
+    public string GetGameName() {
         return "Game Name";
     }
 
-    internal static int GetStartingCash() {
+    public static int GetStartingCash() {
         return 0;
     }
 
@@ -54,6 +50,11 @@ public class GameData : ISaveSerialization<GameSaveData> {
 
     public void Load(GameSaveData saveData) {
         boards = ISaveSerialization<BoardSaveData>.ConvertListFromSave<BoardData>(saveData.boards, typeof(BoardData));
+    }
+
+    internal void DeleteBoard(int selectedBoardIndex) {
+        if (boards.Count >0)
+            boards.RemoveAt(selectedBoardIndex);
     }
 }
 

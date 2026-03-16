@@ -31,6 +31,8 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
 
     [SerializeField] BuzzerSounds soundHandeler;
 
+    [SerializeField] TextMeshProUGUI boardTitleDisplay;
+
     QuestionData currentlyLoadedQuestion;
     int selectedQuestionPanelIndex = 0;
     int selectedBoardIndex = 0;
@@ -72,11 +74,20 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
 
         if (isGameGost()) {
             alwaysButtons.SetActive(isPlaying);
-            if (Keyboard.current.rightArrowKey.wasPressedThisFrame || Keyboard.current.spaceKey.wasPressedThisFrame) {
-                GetNextPanelInQuestion();
-            }
-            if (Keyboard.current.leftArrowKey.wasPressedThisFrame) {
-                GetPreviosPanelInQuestion();
+            if (currentlyLoadedQuestion != null) {
+                if (Keyboard.current.rightArrowKey.wasPressedThisFrame || Keyboard.current.spaceKey.wasPressedThisFrame) {
+                    GetNextPanelInQuestion();
+                }
+                if (Keyboard.current.leftArrowKey.wasPressedThisFrame) {
+                    GetPreviosPanelInQuestion();
+                }
+            } else {
+                if (Keyboard.current.rightArrowKey.wasPressedThisFrame) {
+                    GetNextBoard();
+                }
+                if (Keyboard.current.leftArrowKey.wasPressedThisFrame) {
+                    GetPreviosBoard();
+                }
             }
         }
     }
@@ -157,9 +168,9 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
      */
 
     public void ReturnFromPanel() {
-        OpenBoard(selectedBoardIndex);
         currentlyLoadedQuestion = null;
         selectedQuestionPanelIndex = 0;
+        OpenBoard(selectedBoardIndex);
         foreach (Transform child in nextGamePanelRenderParent.transform) {
             Destroy(child.gameObject);
         }
@@ -170,6 +181,7 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
         SetupBoardButtons(PersistentBoardSave.GetGameData().GetBoard(index));
         panelButtons.SetActive(false);
         boardButtons.SetActive(true);
+        boardTitleDisplay.text = PersistentBoardSave.GetGameData().GetBoard(index).GetName();
     }
 
     public void CreatePlayerCards() {
@@ -275,5 +287,21 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
         loadPanel(currentlyLoadedQuestion.getPanel(selectedQuestionPanelIndex));
         if (currentlyLoadedQuestion.GetPanelCount() > selectedQuestionPanelIndex + 1)
             loadNextPanel(currentlyLoadedQuestion.getPanel(selectedQuestionPanelIndex + 1));
+    }
+
+    private void GetNextBoard() {
+        selectedBoardIndex++;
+        if (selectedBoardIndex >= PersistentBoardSave.GetGameData().GetBoardCount()) {
+            selectedBoardIndex = PersistentBoardSave.GetGameData().GetBoardCount() - 1;
+        }
+        OpenBoard(selectedBoardIndex);
+    }
+
+    private void GetPreviosBoard() {
+        selectedBoardIndex--;
+        if (selectedBoardIndex < 0) {
+            selectedBoardIndex = 0;
+        }
+        OpenBoard(selectedBoardIndex);
     }
 }

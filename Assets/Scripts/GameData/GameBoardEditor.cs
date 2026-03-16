@@ -14,6 +14,7 @@ public class GameBoardEditor : MonoBehaviour, IPanelLoader {
     [SerializeField] GameObject categoryPrefab;
     [SerializeField] GameObject buttonPrefab;
     [SerializeField] TMP_InputField saveFileNameInput;
+    [SerializeField] TMP_InputField boardTitleInput;
     static GameObject PanelButton;
 
     QuestionData currentlyLoadedQuestion;
@@ -27,22 +28,75 @@ public class GameBoardEditor : MonoBehaviour, IPanelLoader {
         //if (PanelButton == null)
         //    PanelButton = (GameObject)Resources.Load("Assets/Prefabs/EdditorPanelButton");
         gameData = new GameData();
-        gameData.AddNewBoard();
-        gameData.GetBoard(0).SetupPanels(5, 5);
-        SaveAndRenderBoard();
+        //gameData.AddNewBoard();
+        //gameData.GetBoard(0).SetupPanels(5, 5);
+        //SaveAndRenderBoard(0);
 
         boardEditorButtons.SetActive(true);
         panelEditorButtons.SetActive(false);
+
+        boardTitleInput.onValueChanged.AddListener(UpdateBoardSaveName);
     }
 
-    public void SaveAndRenderBoard() {
+    private void Update() {
+        if (gameData == null || gameData.GetBoardCount() <= 0)
+            boardTitleInput.text = "";
+    }
+
+    public void CreateBoard(int w, int h) {
+        gameData.AddNewBoard();
+        int boardIndex = gameData.GetBoardCount() - 1;
+        gameData.GetBoard(boardIndex).SetupPanels(w, h);
+        SaveAndRenderBoard(boardIndex);
+    }
+
+    public void DeleteThisBoard() {
+        gameData.DeleteBoard(selectedBoardIndex);
+        selectedBoardIndex--;
+        if (selectedBoardIndex < 0)
+            selectedBoardIndex = 0;
+        if (gameData.GetBoardCount() > 0)
+            SaveAndRenderBoard(selectedBoardIndex);
+    }
+
+    public void GetNextBoard() {
+        if (gameData.GetBoardCount() == 0) return;
+        selectedBoardIndex++;
+        if (selectedBoardIndex >= gameData.GetBoardCount()) 
+            selectedBoardIndex = gameData.GetBoardCount() - 1;
+        SaveAndRenderBoard(selectedBoardIndex);
+    }
+
+    public void GetPreviosBoard() {
+        if (gameData.GetBoardCount() == 0) return;
+        selectedBoardIndex--;
+        if (selectedBoardIndex < 0) 
+            selectedBoardIndex = 0;
+        SaveAndRenderBoard(selectedBoardIndex);
+    }
+
+    public void ReturnFromPanel() {
+        SaveAndRenderBoard(selectedBoardIndex);
+    }
+
+    public void SaveAndRenderBoard(int boardIndex) {
         Save();
-        OpenBoard(0);
+        OpenBoard(boardIndex);
     }
 
     public void OpenBoard(int index) {
         DestroyAllChildren();
         SetupBoardButtons(gameData.GetBoard(index));
+        SetBoardName(gameData.GetBoard(index).GetName());
+    }
+
+    private void SetBoardName(string name) {
+        boardTitleInput.text = name;
+    }
+
+    public void UpdateBoardSaveName(string name) {
+        if (gameData != null && gameData.GetBoardCount() > 0)
+            gameData.GetBoard(selectedBoardIndex).SetName(name);
     }
 
     private void SetupBoardButtons(BoardData board) {

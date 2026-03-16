@@ -8,9 +8,9 @@ public class EditorCategory : MonoBehaviour {
 	CategoryData linkedCategory;
 
     private void Awake() {
-		GameObject child = new GameObject("TitleInput", typeof(RectTransform),typeof(TMP_InputField), typeof(RawImage));
+		GameObject child = new GameObject("TitleInput", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image), typeof(TMP_InputField));
 		child.transform.SetParent(transform);
-		child.GetComponent<RawImage>().color = new Color(0,0,0,0);
+		child.GetComponent<Image>().color = new Color(0,0,0,0);
 		RectTransform rect = (child.transform as RectTransform);
 		TMP_InputField inputField = child.GetComponent<TMP_InputField>();
 		inputField.transition = Selectable.Transition.None;
