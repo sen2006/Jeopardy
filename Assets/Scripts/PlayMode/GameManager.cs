@@ -221,9 +221,9 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
                 PanelButton panelButton = newButton.GetComponent<PanelButton>();
                 QuestionData question = board.getQuestionFor(w, h);
 
-                panelButton.setQuestion(question);
-                panelButton.setPanelLoader(this);
-                panelButton.setCashText(question.cashAmount);
+                panelButton.SetQuestion(question);
+                panelButton.SetPanelLoader(this);
+                panelButton.SetCashText(question.cashAmount);
                 if (usedButtons.Contains(question)) {
                     panelButton.GetComponent<Image>().color = Color.gray;
                 }
@@ -243,7 +243,7 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
         }
     }
 
-    public void loadPanel(PanelData panelData) {
+    public void LoadPanel(PanelData panelData) {
         DestroyAllChildren();
         panelData.loadToScene(gamePanelRenderParent);
         panelButtons.SetActive(true);
@@ -257,9 +257,9 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
         panelData.loadToScene(nextGamePanelRenderParent);
     }
 
-    public void setLoadedQeastion(QuestionData data) {
+    public void SetLoadedQuestion(QuestionData data) {
         selectedQuestionPanelIndex = 0;
-        loadPanel(data.getPanel(0));
+        LoadPanel(data.getPanel(0));
         if (data.GetPanelCount() > 1) {
             loadNextPanel(data.getPanel(1));
         }
@@ -273,7 +273,7 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
         if (selectedQuestionPanelIndex >= currentlyLoadedQuestion.GetPanelCount()) {
             selectedQuestionPanelIndex = currentlyLoadedQuestion.GetPanelCount() - 1;
         }
-        loadPanel(currentlyLoadedQuestion.getPanel(selectedQuestionPanelIndex));
+        LoadPanel(currentlyLoadedQuestion.getPanel(selectedQuestionPanelIndex));
         if (currentlyLoadedQuestion.GetPanelCount() > selectedQuestionPanelIndex+1)
             loadNextPanel(currentlyLoadedQuestion.getPanel(selectedQuestionPanelIndex+1));
     }
@@ -284,7 +284,7 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
         if (selectedQuestionPanelIndex < 0) {
             selectedQuestionPanelIndex = 0;
         }
-        loadPanel(currentlyLoadedQuestion.getPanel(selectedQuestionPanelIndex));
+        LoadPanel(currentlyLoadedQuestion.getPanel(selectedQuestionPanelIndex));
         if (currentlyLoadedQuestion.GetPanelCount() > selectedQuestionPanelIndex + 1)
             loadNextPanel(currentlyLoadedQuestion.getPanel(selectedQuestionPanelIndex + 1));
     }

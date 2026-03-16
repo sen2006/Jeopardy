@@ -57,6 +57,8 @@ public class GameBoardEditor : MonoBehaviour, IPanelLoader {
             selectedBoardIndex = 0;
         if (gameData.GetBoardCount() > 0)
             SaveAndRenderBoard(selectedBoardIndex);
+        else 
+            DestroyAllChildren();
     }
 
     public void GetNextBoard() {
@@ -115,9 +117,9 @@ public class GameBoardEditor : MonoBehaviour, IPanelLoader {
                 GameObject newButton = Instantiate(buttonPrefab, Vector3.zero, Quaternion.identity);
                 newButton.transform.SetParent(newCategory.transform.GetChild(0));
                 PanelButton panelButton = newButton.GetComponent<PanelButton>();
-                panelButton.setQuestion(board.getQuestionFor(w,h));
-                panelButton.setPanelLoader(this);
-                panelButton.setCashText(board.getQuestionFor(w, h).cashAmount);
+                panelButton.SetQuestion(board.getQuestionFor(w,h));
+                panelButton.SetPanelLoader(this);
+                panelButton.SetCashText(board.getQuestionFor(w, h).cashAmount);
                 panelButton.transform.localScale = Vector3.one;
                 h++;
             }
@@ -141,14 +143,14 @@ public class GameBoardEditor : MonoBehaviour, IPanelLoader {
         }
     }
 
-    public void loadPanel(PanelData panelData) {
+    public void LoadPanel(PanelData panelData) {
         DestroyAllChildren();
         panelData.loadToEditorScene(panelRenderParent);
     }
 
-    public void setLoadedQeastion(QuestionData data) {
+    public void SetLoadedQuestion(QuestionData data) {
         selectedQuestionPanelIndex = 0;
-        loadPanel(data.getPanel(0));
+        LoadPanel(data.getPanel(0));
         boardEditorButtons.SetActive(false);
         panelEditorButtons.SetActive(true);
         currentlyLoadedQuestion = data;
@@ -174,7 +176,7 @@ public class GameBoardEditor : MonoBehaviour, IPanelLoader {
         if (selectedQuestionPanelIndex >= currentlyLoadedQuestion.GetPanelCount()) {
             selectedQuestionPanelIndex = currentlyLoadedQuestion.GetPanelCount() - 1;
         }
-        loadPanel(currentlyLoadedQuestion.getPanel(selectedQuestionPanelIndex));
+        LoadPanel(currentlyLoadedQuestion.getPanel(selectedQuestionPanelIndex));
     }
 
     public void GetPreviosPanelInQuestion() {
@@ -184,7 +186,7 @@ public class GameBoardEditor : MonoBehaviour, IPanelLoader {
         if (selectedQuestionPanelIndex < 0) {
             selectedQuestionPanelIndex = 0;
         }
-        loadPanel(currentlyLoadedQuestion.getPanel(selectedQuestionPanelIndex));
+        LoadPanel(currentlyLoadedQuestion.getPanel(selectedQuestionPanelIndex));
     }
 
     public void SaveToFile() {
@@ -247,11 +249,11 @@ public class GameBoardEditor : MonoBehaviour, IPanelLoader {
 
         if (selectedQuestionPanelIndex >= currentlyLoadedQuestion.GetPanelCount())
             selectedQuestionPanelIndex = currentlyLoadedQuestion.GetPanelCount() - 1;
-        loadPanel(currentlyLoadedQuestion.getPanel(selectedQuestionPanelIndex));
+        LoadPanel(currentlyLoadedQuestion.getPanel(selectedQuestionPanelIndex));
     }
 
     public void ClearCurrentPanel() {
         currentlyLoadedQuestion.ClearPanel(selectedQuestionPanelIndex);
-        loadPanel(currentlyLoadedQuestion.getPanel(selectedQuestionPanelIndex));
+        LoadPanel(currentlyLoadedQuestion.getPanel(selectedQuestionPanelIndex));
     }
 }

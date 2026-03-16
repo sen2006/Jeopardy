@@ -1,7 +1,5 @@
-using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class PanelButton : MonoBehaviour
@@ -16,19 +14,19 @@ public class PanelButton : MonoBehaviour
         button.onClick.AddListener(OnClick);
     }
 
-    public void setCashText(int amount) {
+    public void SetCashText(int amount) {
         text.text = amount + "$";
     }
 
     public void OnClick() {
-        loader.setLoadedQeastion(data);
+        loader.SetLoadedQuestion(data);
     }
 
-    public void setQuestion(QuestionData panelData) {
+    public void SetQuestion(QuestionData panelData) {
         data = panelData;
     }
 
-    public void setPanelLoader(IPanelLoader loader) {
+    public void SetPanelLoader(IPanelLoader loader) {
         this.loader = loader;
     }
 }
