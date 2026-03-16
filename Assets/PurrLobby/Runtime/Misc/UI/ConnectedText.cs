@@ -11,10 +11,12 @@ namespace PurrLobby
     {
         [SerializeField] private NetworkManager networkManager;
         [SerializeField] private TMP_Text connectedText;
+        [SerializeField] private GameObject retryButton;
 
         private void Awake()
         {
             networkManager.onClientConnectionState += OnConnectionState;
+            retryButton.SetActive(false);
         }
 
         private void OnDestroy()
@@ -24,10 +26,15 @@ namespace PurrLobby
 
         private void OnConnectionState(ConnectionState obj)
         {
-            if (obj == ConnectionState.Connected)
+            if (obj == ConnectionState.Connected) {
                 StartCoroutine(TypewriterEffect("Connected"));
-            else if (obj == ConnectionState.Disconnected)
+                retryButton.SetActive(false);
+
+            } else if (obj == ConnectionState.Disconnected) {
                 StartCoroutine(TypewriterEffect("Not connected"));
+                retryButton.SetActive(true);
+
+            }
         }
 
         private WaitForSeconds _wait = new(0.1f);
