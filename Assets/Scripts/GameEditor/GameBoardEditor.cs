@@ -14,6 +14,7 @@ public class GameBoardEditor : MonoBehaviour, IPanelLoader {
     [SerializeField] GameObject categoryPrefab;
     [SerializeField] GameObject buttonPrefab;
     [SerializeField] TMP_InputField saveFileNameInput;
+    [SerializeField] TMP_InputField boardTitleInput;
     static GameObject PanelButton;
 
     QuestionData currentlyLoadedQuestion;
@@ -27,22 +28,77 @@ public class GameBoardEditor : MonoBehaviour, IPanelLoader {
         //if (PanelButton == null)
         //    PanelButton = (GameObject)Resources.Load("Assets/Prefabs/EdditorPanelButton");
         gameData = new GameData();
-        gameData.AddNewBoard();
-        gameData.GetBoard(0).SetupPanels(5, 5);
-        SaveAndRenderBoard();
+        //gameData.AddNewBoard();
+        //gameData.GetBoard(0).SetupPanels(5, 5);
+        //SaveAndRenderBoard(0);
 
         boardEditorButtons.SetActive(true);
         panelEditorButtons.SetActive(false);
+
+        boardTitleInput.onValueChanged.AddListener(UpdateBoardSaveName);
     }
 
-    public void SaveAndRenderBoard() {
+    private void Update() {
+        if (gameData == null || gameData.GetBoardCount() <= 0)
+            boardTitleInput.text = "";
+    }
+
+    public void CreateBoard(int w, int h) {
+        gameData.AddNewBoard();
+        int boardIndex = gameData.GetBoardCount() - 1;
+        gameData.GetBoard(boardIndex).SetupPanels(w, h);
+        SaveAndRenderBoard(boardIndex);
+    }
+
+    public void DeleteThisBoard() {
+        gameData.DeleteBoard(selectedBoardIndex);
+        selectedBoardIndex--;
+        if (selectedBoardIndex < 0)
+            selectedBoardIndex = 0;
+        if (gameData.GetBoardCount() > 0)
+            SaveAndRenderBoard(selectedBoardIndex);
+        else 
+            DestroyAllChildren();
+    }
+
+    public void GetNextBoard() {
+        if (gameData.GetBoardCount() == 0) return;
+        selectedBoardIndex++;
+        if (selectedBoardIndex >= gameData.GetBoardCount()) 
+            selectedBoardIndex = gameData.GetBoardCount() - 1;
+        SaveAndRenderBoard(selectedBoardIndex);
+    }
+
+    public void GetPreviosBoard() {
+        if (gameData.GetBoardCount() == 0) return;
+        selectedBoardIndex--;
+        if (selectedBoardIndex < 0) 
+            selectedBoardIndex = 0;
+        SaveAndRenderBoard(selectedBoardIndex);
+    }
+
+    public void ReturnFromPanel() {
+        SaveAndRenderBoard(selectedBoardIndex);
+    }
+
+    public void SaveAndRenderBoard(int boardIndex) {
         Save();
-        OpenBoard(0);
+        OpenBoard(boardIndex);
     }
 
     public void OpenBoard(int index) {
         DestroyAllChildren();
         SetupBoardButtons(gameData.GetBoard(index));
+        SetBoardName(gameData.GetBoard(index).GetName());
+    }
+
+    private void SetBoardName(string name) {
+        boardTitleInput.text = name;
+    }
+
+    public void UpdateBoardSaveName(string name) {
+        if (gameData != null && gameData.GetBoardCount() > 0)
+            gameData.GetBoard(selectedBoardIndex).SetName(name);
     }
 
     private void SetupBoardButtons(BoardData board) {
@@ -61,9 +117,9 @@ public class GameBoardEditor : MonoBehaviour, IPanelLoader {
                 GameObject newButton = Instantiate(buttonPrefab, Vector3.zero, Quaternion.identity);
                 newButton.transform.SetParent(newCategory.transform.GetChild(0));
                 PanelButton panelButton = newButton.GetComponent<PanelButton>();
-                panelButton.setQuestion(board.getQuestionFor(w,h));
-                panelButton.setPanelLoader(this);
-                panelButton.setCashText(board.getQuestionFor(w, h).cashAmount);
+                panelButton.SetQuestion(board.getQuestionFor(w,h));
+                panelButton.SetPanelLoader(this);
+                panelButton.SetCashText(board.getQuestionFor(w, h).cashAmount);
                 panelButton.transform.localScale = Vector3.one;
                 h++;
             }
@@ -87,14 +143,14 @@ public class GameBoardEditor : MonoBehaviour, IPanelLoader {
         }
     }
 
-    public void loadPanel(PanelData panelData) {
+    public void LoadPanel(PanelData panelData) {
         DestroyAllChildren();
         panelData.loadToEditorScene(panelRenderParent);
     }
 
-    public void setLoadedQeastion(QuestionData data) {
+    public void SetLoadedQuestion(QuestionData data) {
         selectedQuestionPanelIndex = 0;
-        loadPanel(data.getPanel(0));
+        LoadPanel(data.getPanel(0));
         boardEditorButtons.SetActive(false);
         panelEditorButtons.SetActive(true);
         currentlyLoadedQuestion = data;
@@ -120,7 +176,7 @@ public class GameBoardEditor : MonoBehaviour, IPanelLoader {
         if (selectedQuestionPanelIndex >= currentlyLoadedQuestion.GetPanelCount()) {
             selectedQuestionPanelIndex = currentlyLoadedQuestion.GetPanelCount() - 1;
         }
-        loadPanel(currentlyLoadedQuestion.getPanel(selectedQuestionPanelIndex));
+        LoadPanel(currentlyLoadedQuestion.getPanel(selectedQuestionPanelIndex));
     }
 
     public void GetPreviosPanelInQuestion() {
@@ -130,7 +186,7 @@ public class GameBoardEditor : MonoBehaviour, IPanelLoader {
         if (selectedQuestionPanelIndex < 0) {
             selectedQuestionPanelIndex = 0;
         }
-        loadPanel(currentlyLoadedQuestion.getPanel(selectedQuestionPanelIndex));
+        LoadPanel(currentlyLoadedQuestion.getPanel(selectedQuestionPanelIndex));
     }
 
     public void SaveToFile() {
@@ -193,11 +249,11 @@ public class GameBoardEditor : MonoBehaviour, IPanelLoader {
 
         if (selectedQuestionPanelIndex >= currentlyLoadedQuestion.GetPanelCount())
             selectedQuestionPanelIndex = currentlyLoadedQuestion.GetPanelCount() - 1;
-        loadPanel(currentlyLoadedQuestion.getPanel(selectedQuestionPanelIndex));
+        LoadPanel(currentlyLoadedQuestion.getPanel(selectedQuestionPanelIndex));
     }
 
     public void ClearCurrentPanel() {
         currentlyLoadedQuestion.ClearPanel(selectedQuestionPanelIndex);
-        loadPanel(currentlyLoadedQuestion.getPanel(selectedQuestionPanelIndex));
+        LoadPanel(currentlyLoadedQuestion.getPanel(selectedQuestionPanelIndex));
     }
 }

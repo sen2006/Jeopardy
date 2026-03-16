@@ -4,8 +4,8 @@ using UnityEngine;
 
 [Serializable]
 public class BoardData : ISaveSerialization<BoardSaveData> {
-    [SerializeField]
     List<CategoryData> categories = new List<CategoryData>();
+    string name = "Board Title";
     public QuestionData getQuestionFor(int boardX, int boardY) {
         return categories[boardX].GetQuestion(boardY);
     }
@@ -24,9 +24,6 @@ public class BoardData : ISaveSerialization<BoardSaveData> {
         return longest;
     }
 
-    public void loadToScene(GameObject renderParent) {
-        throw new NotImplementedException();
-    }
 
     public void SetupPanels(int width, int height) {
         categories = new List<CategoryData>();
@@ -48,15 +45,26 @@ public class BoardData : ISaveSerialization<BoardSaveData> {
     public BoardSaveData Save() {
         BoardSaveData saveData = new BoardSaveData();
         saveData.categories = ISaveSerialization<CategorySaveData>.ConvertListToSave(categories);
+        saveData.name = name;
         return saveData;
     }
 
     public void Load(BoardSaveData saveData) {
-        categories = ISaveSerialization<CategorySaveData>.ConvertListFromSave<CategoryData>(saveData.categories, typeof(CategoryData)); ;
+        categories = ISaveSerialization<CategorySaveData>.ConvertListFromSave<CategoryData>(saveData.categories, typeof(CategoryData));
+        name = saveData.name;
+    }
+
+    public string GetName() {
+        return name;
+    }
+
+    internal void SetName(string name) {
+        this.name = name;   
     }
 }
 
 [Serializable]
 public struct BoardSaveData {
+    public string name;
     public List<CategorySaveData> categories;
 }

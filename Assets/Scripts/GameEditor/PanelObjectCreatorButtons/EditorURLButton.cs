@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EdditorURLButton : MonoBehaviour {
+public class EditorURLButton : MonoBehaviour {
 
     [SerializeField] Button button;
     [SerializeField] GameObject canvas;
