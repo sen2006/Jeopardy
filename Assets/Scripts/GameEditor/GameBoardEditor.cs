@@ -15,6 +15,7 @@ public class GameBoardEditor : MonoBehaviour, IPanelLoader {
     [SerializeField] GameObject buttonPrefab;
     [SerializeField] TMP_InputField saveFileNameInput;
     [SerializeField] TMP_InputField boardTitleInput;
+    [SerializeField] TextMeshProUGUI questionCashDisplay;
     static GameObject PanelButton;
 
     QuestionData currentlyLoadedQuestion;
@@ -36,11 +37,15 @@ public class GameBoardEditor : MonoBehaviour, IPanelLoader {
         panelEditorButtons.SetActive(false);
 
         boardTitleInput.onValueChanged.AddListener(UpdateBoardSaveName);
+
+        questionCashDisplay.text = "";
     }
 
     private void Update() {
         if (gameData == null || gameData.GetBoardCount() <= 0)
             boardTitleInput.text = "";
+        if (currentlyLoadedQuestion != null)
+            questionCashDisplay.text = currentlyLoadedQuestion.GetRewardCashAmount()+"$";
     }
 
     public void CreateBoard(int w, int h) {

@@ -60,7 +60,7 @@ public class ImagePanelObject : PanelObject {
     }
 
     public static string TextureToBase64(Texture2D texture) {
-        byte[] pngBytes = texture.EncodeToPNG();
+        byte[] pngBytes = texture.EncodeToJPG();
         return Convert.ToBase64String(pngBytes);
     }
 

@@ -12,6 +12,7 @@ public class PlayerScoreCard : MonoBehaviour
     [SerializeField] RawImage image;
     [SerializeField] Button increaseCash;
     [SerializeField] Button decreaseCash;
+    [SerializeField] GameObject BuzzCountBack;
     PlayerID playerID;
 
     private void Start() {
@@ -23,8 +24,10 @@ public class PlayerScoreCard : MonoBehaviour
         score.text = cash + "$";
         if (GameManager.HasBuzzed(playerID)) {
             buzzerCountDisplay.text = (GameManager.GetBuzzedPlace(playerID)+1) + "";
+            BuzzCountBack.SetActive(true);
         } else {
             buzzerCountDisplay.text = "";
+            BuzzCountBack.SetActive(false);
         }
     }
 
@@ -45,11 +48,16 @@ public class PlayerScoreCard : MonoBehaviour
     }
 
     private void addCashOnClick() {
-        cash += 100;
+        cash += GetCashChange();
     }
 
     private void removeCashOnClick() {
-        cash -= 100;
+        cash -= GetCashChange();
+    }
+
+    private int GetCashChange() {
+        if (GameManager.singleton == null) return 100;
+        return GameManager.singleton.GetCashChange();
     }
 
     public void LinkPlayer(PlayerID id) {

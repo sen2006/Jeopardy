@@ -1,5 +1,6 @@
 using PurrNet;
 using Steamworks;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -32,6 +33,7 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
     [SerializeField] BuzzerSounds soundHandeler;
 
     [SerializeField] TextMeshProUGUI boardTitleDisplay;
+    [SerializeField] TextMeshProUGUI questionCashDisplay;
 
     QuestionData currentlyLoadedQuestion;
     int selectedQuestionPanelIndex = 0;
@@ -47,6 +49,7 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
     [Header("Debuging")]
     [SerializeField] bool forceHost = false;
     [SerializeField] bool forcePlayer = false;
+    internal static GameManager singleton;
 
     private bool isGameGost() {
         if (forcePlayer) return false;
@@ -54,6 +57,7 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
     }
 
     private void Start() {
+        singleton = this;
         preStartStatus.SetActive(true);
         hostObjects.SetActive(false);
         hostObjectsPlayMode.SetActive(false);
@@ -63,6 +67,8 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
         panelButtons.SetActive(false);
         boardButtons.SetActive(false);
         alwaysButtons.SetActive(false);
+
+        questionCashDisplay.text = "";
     }
 
     private void Update() {
@@ -88,6 +94,12 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
                 if (Keyboard.current.leftArrowKey.wasPressedThisFrame) {
                     GetPreviosBoard();
                 }
+            }
+            if (currentlyLoadedQuestion != null)
+                questionCashDisplay.text = currentlyLoadedQuestion.GetRewardCashAmount()+"$";
+        } else {
+            if (Keyboard.current.spaceKey.wasPressedThisFrame) {
+                Buzz();
             }
         }
     }
@@ -303,5 +315,15 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
             selectedBoardIndex = 0;
         }
         OpenBoard(selectedBoardIndex);
+    }
+
+    internal int GetCashChange() {
+        if (Keyboard.current.leftCtrlKey.isPressed)
+            return 1;
+        if (Keyboard.current.leftAltKey.isPressed)
+            return 10;
+        if (currentlyLoadedQuestion == null || Keyboard.current.leftShiftKey.isPressed)
+            return 100;
+        return currentlyLoadedQuestion.GetRewardCashAmount();
     }
 }
