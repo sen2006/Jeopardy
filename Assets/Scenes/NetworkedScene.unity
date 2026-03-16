@@ -1618,6 +1618,8 @@ MonoBehaviour:
   steamIDBoundSounds:
   - steamID: 76561198089109531
     clip: {fileID: 8300000, guid: 52c2b9054d056754e8385223cc4b6f48, type: 3}
+  - steamID: 76561199153200190
+    clip: {fileID: 8300000, guid: e163c4f504d450d4a9aeba135564ac1b, type: 3}
 --- !u!82 &1140192129
 AudioSource:
   m_ObjectHideFlags: 0
