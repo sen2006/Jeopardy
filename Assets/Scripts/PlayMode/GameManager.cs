@@ -98,6 +98,7 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
             if (currentlyLoadedQuestion != null)
                 questionCashDisplay.text = currentlyLoadedQuestion.GetRewardCashAmount()+"$";
         } else {
+            // buzz using the keyboard
             if (Keyboard.current.spaceKey.wasPressedThisFrame) {
                 Buzz();
             }
