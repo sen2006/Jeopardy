@@ -107,5 +107,4 @@ public class EditorURLPanelObject : EditorPanelObject<URLPanelObject> {
         toReturn.SetText(gameObject.GetComponent<TMP_InputField>().text);
         return toReturn;
     }
-
 }

@@ -1,0 +1,715 @@
+fileFormatVersion: 2
+guid: b4aff32b30dd6a947a34b3a095a5d658
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3434960693722596382
+    second: buzzer_pressed_0
+  - first:
+      213: 589967473622316871
+    second: buzzer_pressed_1
+  - first:
+      213: 3877226328517033024
+    second: buzzer_pressed_2
+  - first:
+      213: -3056359449824842424
+    second: buzzer_pressed_3
+  - first:
+      213: -1726403082512269862
+    second: buzzer_pressed_4
+  - first:
+      213: 4693272165836260112
+    second: buzzer_pressed_5
+  - first:
+      213: 7191406948927688048
+    second: buzzer_pressed_6
+  - first:
+      213: -2999176802889924826
+    second: buzzer_pressed_7
+  - first:
+      213: -3441582914815424164
+    second: buzzer_pressed_8
+  - first:
+      213: 692182380754943092
+    second: buzzer_pressed_9
+  - first:
+      213: -5222338585305823666
+    second: buzzer_pressed_10
+  - first:
+      213: -25826833662635329
+    second: buzzer_pressed_11
+  - first:
+      213: 1874226431300218328
+    second: buzzer_pressed_12
+  - first:
+      213: -406104379814732952
+    second: buzzer_pressed_13
+  - first:
+      213: 7573024092784220808
+    second: buzzer_pressed_14
+  - first:
+      213: -5543151423357579030
+    second: buzzer_pressed_15
+  - first:
+      213: -2494801393844799893
+    second: buzzer_pressed_16
+  - first:
+      213: 1955932105595149093
+    second: buzzer_pressed_17
+  - first:
+      213: -7858701807822001153
+    second: buzzer_pressed_18
+  - first:
+      213: -6621326848644867392
+    second: buzzer_pressed_19
+  - first:
+      213: 2226488667093530842
+    second: buzzer_pressed_20
+  - first:
+      213: 2230698726713939308
+    second: buzzer_pressed_21
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: buzzer_pressed_0
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 941
+        width: 35
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e14c3ce3d8e6baf20800000000000000
+      internalID: 3434960693722596382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buzzer_pressed_1
+      rect:
+        serializedVersion: 2
+        x: 406
+        y: 948
+        width: 158
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 747fa4e9a4cff2800800000000000000
+      internalID: 589967473622316871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buzzer_pressed_2
+      rect:
+        serializedVersion: 2
+        x: 566
+        y: 948
+        width: 45
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04cbc09adccaec530800000000000000
+      internalID: 3877226328517033024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buzzer_pressed_3
+      rect:
+        serializedVersion: 2
+        x: 612
+        y: 942
+        width: 31
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84d284f0641a595d0800000000000000
+      internalID: -3056359449824842424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buzzer_pressed_4
+      rect:
+        serializedVersion: 2
+        x: 321
+        y: 928
+        width: 21
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: add77b71b859a08e0800000000000000
+      internalID: -1726403082512269862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buzzer_pressed_5
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 934
+        width: 29
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01306e63b2ad12140800000000000000
+      internalID: 4693272165836260112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buzzer_pressed_6
+      rect:
+        serializedVersion: 2
+        x: 642
+        y: 935
+        width: 30
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07d4c12b4820dc360800000000000000
+      internalID: 7191406948927688048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buzzer_pressed_7
+      rect:
+        serializedVersion: 2
+        x: 671
+        y: 928
+        width: 25
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62f772d8698c066d0800000000000000
+      internalID: -2999176802889924826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buzzer_pressed_8
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 915
+        width: 17
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c598f51c29a0d30d0800000000000000
+      internalID: -3441582914815424164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buzzer_pressed_9
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 921
+        width: 21
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47cbeac35302b9900800000000000000
+      internalID: 692182380754943092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buzzer_pressed_10
+      rect:
+        serializedVersion: 2
+        x: 695
+        y: 922
+        width: 19
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e46c70ec9b68687b0800000000000000
+      internalID: -5222338585305823666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buzzer_pressed_11
+      rect:
+        serializedVersion: 2
+        x: 713
+        y: 914
+        width: 22
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb29dd1b1ae34aff0800000000000000
+      internalID: -25826833662635329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buzzer_pressed_12
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 902
+        width: 14
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8dd2c4a5207920a10800000000000000
+      internalID: 1874226431300218328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buzzer_pressed_13
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 908
+        width: 18
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86b996bd73a3d5af0800000000000000
+      internalID: -406104379814732952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buzzer_pressed_14
+      rect:
+        serializedVersion: 2
+        x: 734
+        y: 909
+        width: 13
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88ad0ede949c81960800000000000000
+      internalID: 7573024092784220808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buzzer_pressed_15
+      rect:
+        serializedVersion: 2
+        x: 746
+        y: 895
+        width: 31
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae0129a3625c213b0800000000000000
+      internalID: -5543151423357579030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buzzer_pressed_16
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 888
+        width: 14
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b663bbea95fa06dd0800000000000000
+      internalID: -2494801393844799893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buzzer_pressed_17
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 895
+        width: 16
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52bd7c613edd42b10800000000000000
+      internalID: 1955932105595149093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buzzer_pressed_18
+      rect:
+        serializedVersion: 2
+        x: 776
+        y: 882
+        width: 25
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ffbac0dc75840f290800000000000000
+      internalID: -7858701807822001153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buzzer_pressed_19
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 93
+        width: 1001
+        height: 791
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ca14ccff425c14a0800000000000000
+      internalID: -6621326848644867392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buzzer_pressed_20
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 875
+        width: 13
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad8fa8275a316ee10800000000000000
+      internalID: 2226488667093530842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buzzer_pressed_21
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 882
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6553b65ca805fe10800000000000000
+      internalID: 2230698726713939308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      buzzer_pressed_0: 3434960693722596382
+      buzzer_pressed_1: 589967473622316871
+      buzzer_pressed_10: -5222338585305823666
+      buzzer_pressed_11: -25826833662635329
+      buzzer_pressed_12: 1874226431300218328
+      buzzer_pressed_13: -406104379814732952
+      buzzer_pressed_14: 7573024092784220808
+      buzzer_pressed_15: -5543151423357579030
+      buzzer_pressed_16: -2494801393844799893
+      buzzer_pressed_17: 1955932105595149093
+      buzzer_pressed_18: -7858701807822001153
+      buzzer_pressed_19: -6621326848644867392
+      buzzer_pressed_2: 3877226328517033024
+      buzzer_pressed_20: 2226488667093530842
+      buzzer_pressed_21: 2230698726713939308
+      buzzer_pressed_3: -3056359449824842424
+      buzzer_pressed_4: -1726403082512269862
+      buzzer_pressed_5: 4693272165836260112
+      buzzer_pressed_6: 7191406948927688048
+      buzzer_pressed_7: -2999176802889924826
+      buzzer_pressed_8: -3441582914815424164
+      buzzer_pressed_9: 692182380754943092
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

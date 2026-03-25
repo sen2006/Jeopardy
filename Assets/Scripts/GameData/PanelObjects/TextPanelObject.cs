@@ -1,8 +1,5 @@
-using System;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering.Universal.Internal;
 using UnityEngine.UI;
 
 public class TextPanelObject : PanelObject {
