@@ -6,12 +6,14 @@ public class OpenSettingMenu : MonoBehaviour {
     [SerializeField] GameObject canvas;
     [SerializeField] bool onEsc;
 
+    private GameObject obj;
+
     public void Update() {
-        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        if (Keyboard.current.escapeKey.wasPressedThisFrame && obj == null)
             OpenMenu();
     }
 
     public void OpenMenu() {
-        Instantiate(settingsPrefab, canvas.transform);
+        obj = Instantiate(settingsPrefab, canvas.transform);
     }
 }
