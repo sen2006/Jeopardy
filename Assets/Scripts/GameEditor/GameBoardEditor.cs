@@ -1,22 +1,40 @@
 using System;
 using System.IO;
+using System.Net.NetworkInformation;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameBoardEditor : MonoBehaviour, IPanelLoader {
     public static GameBoardEditor singleton;
 
-    [SerializeField] GameData gameData;
+    [ Header("Canvas Views")]
+    [SerializeField] GameObject loadOrCreateView;
+    [SerializeField] GameObject editView;
+
+
+    [Header("Load or Create Objects")]
+    [SerializeField] TMP_InputField mainSaveFileNameInput;
+    [SerializeField] Button gameCreateButon;
+    [SerializeField] Button gameLoadButon;
+
+    [Header("Editor Objects")]
     [SerializeField] GameObject boardRenderParent;
     [SerializeField] GameObject panelRenderParent;
     [SerializeField] GameObject boardEditorButtons;
     [SerializeField] GameObject panelEditorButtons;
-    [SerializeField] GameObject categoryPrefab;
-    [SerializeField] GameObject buttonPrefab;
-    [SerializeField] TMP_InputField saveFileNameInput;
     [SerializeField] TMP_InputField boardTitleInput;
     [SerializeField] TextMeshProUGUI questionCashDisplay;
-    static GameObject PanelButton;
+
+    [Header("Prefabs")]
+    [SerializeField] GameObject categoryPrefab;
+    [SerializeField] GameObject buttonPrefab;
+
+    
+    
+    [Header("Loaded Data Debug")]
+    [SerializeField] string gameDataSaveLocation;
+    /*[SerializeField]*/GameData gameData;
 
     QuestionData currentlyLoadedQuestion;
     int selectedQuestionPanelIndex = 0;
@@ -25,13 +43,7 @@ public class GameBoardEditor : MonoBehaviour, IPanelLoader {
     public void Start() {
         if (singleton != null) throw new Exception("Singleton Already Exists");
         singleton = this;
-
-        //if (PanelButton == null)
-        //    PanelButton = (GameObject)Resources.Load("Assets/Prefabs/EdditorPanelButton");
-        gameData = new GameData();
-        //gameData.AddNewBoard();
-        //gameData.GetBoard(0).SetupPanels(5, 5);
-        //SaveAndRenderBoard(0);
+        gameData = null;
 
         boardEditorButtons.SetActive(true);
         panelEditorButtons.SetActive(false);
@@ -42,10 +54,47 @@ public class GameBoardEditor : MonoBehaviour, IPanelLoader {
     }
 
     private void Update() {
+        editView.SetActive(gameData != null);
+        loadOrCreateView.SetActive(gameData == null);
+
+        bool gameButtons = IsValidFileName(mainSaveFileNameInput.text);
+        bool saveExists = FileExists(mainSaveFileNameInput.text);
+
+        gameCreateButon.interactable = gameButtons; //&& !saveExists;
+        gameLoadButon.interactable = gameButtons && saveExists;
+
         if (gameData == null || gameData.GetBoardCount() <= 0)
             boardTitleInput.text = "";
         if (currentlyLoadedQuestion != null)
             questionCashDisplay.text = currentlyLoadedQuestion.GetRewardCashAmount()+"$";
+    }
+
+    private bool IsValidFileName(string name) {
+        return name != "";
+    }
+
+    private bool FileExists(string name) {
+        return SaveSystem.FileExists(name);
+    }
+
+    public void CreateGameButton() {
+        CreateGame(mainSaveFileNameInput.text);
+    }
+
+    public void LoadGameButton() {
+        LoadFromFile(mainSaveFileNameInput.text);
+        SaveAndRenderBoard(0);
+    }
+
+    public void CreateGame(string fileName) {
+        gameDataSaveLocation = fileName;
+        gameData = new();
+        SaveAndRenderBoard(0);
+    }
+
+    public void ScrapLocalSave() {
+        gameDataSaveLocation = null;
+        gameData = null;
     }
 
     public void CreateBoard(int w, int h) {
@@ -87,6 +136,8 @@ public class GameBoardEditor : MonoBehaviour, IPanelLoader {
     }
 
     public void SaveAndRenderBoard(int boardIndex) {
+        editView.SetActive(true);
+        loadOrCreateView.SetActive(false);
         Save();
         OpenBoard(boardIndex);
     }
@@ -195,13 +246,22 @@ public class GameBoardEditor : MonoBehaviour, IPanelLoader {
     }
 
     public void SaveToFile() {
+        if (gameData == null) return;
         GameSaveData save = gameData.Save();
-        SaveSystem.Save(saveFileNameInput.text, save);
+        //SaveSystem.Save(saveFileNameInput.text, save);
+        SaveSystem.Save(gameDataSaveLocation, save);
         //ShowExplorer(saveFileNameInput.text);
     }
 
-    public void LoadFromFile() {
-        gameData.Load(SaveSystem.Load(saveFileNameInput.text));
+    public void LoadFromFile(String filename) {
+        gameData = new();
+        gameData.Load(SaveSystem.Load(filename));
+        gameDataSaveLocation = filename;
+        OpenBoard(0);
+    }
+
+    public void UpdateFromFile() {
+        gameData.Load(SaveSystem.Load(gameDataSaveLocation));
         OpenBoard(0);
     }
 
