@@ -3402,7 +3402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15156e7f57bff964485891eba8344bbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lobbyType: 1
+  lobbyType: 2
   maxLobbiesToFind: 10
   handleSteamInit: 1
 --- !u!114 &1097043115
@@ -3419,7 +3419,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentProvider: {fileID: 1097043114}
   createRoomArgs:
-    maxPlayers: 5
+    maxPlayers: 20
     roomProperties:
       keys:
       - Jeo
