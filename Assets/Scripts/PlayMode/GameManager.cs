@@ -35,6 +35,8 @@ public class GameManager : NetworkBehaviour, IPanelLoader {
     [SerializeField] TextMeshProUGUI boardTitleDisplay;
     [SerializeField] TextMeshProUGUI questionCashDisplay;
 
+    [SerializeField] public TMP_FontAsset defaultFont;
+
     QuestionData currentlyLoadedQuestion;
     int selectedQuestionPanelIndex = 0;
     int selectedBoardIndex = 0;

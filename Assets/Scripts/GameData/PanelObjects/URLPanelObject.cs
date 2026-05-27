@@ -21,6 +21,8 @@ public class URLPanelObject : PanelObject {
         TextMeshProUGUI textMesh = obj.GetComponent<TextMeshProUGUI>();
 
         textMesh.text = URL;
+        textMesh.font = GameManager.singleton.defaultFont;
+        textMesh.fontSize = 100;
         return obj;
     }
 
@@ -44,7 +46,9 @@ public class URLPanelObject : PanelObject {
         rectText.anchoredPosition = Vector2.zero;
         rectText.sizeDelta = new Vector2(500, 125);
 
-        textObj.GetComponent<TextMeshProUGUI>().fontSize = 100;
+        TextMeshProUGUI TMP_Text = textObj.GetComponent<TextMeshProUGUI>();
+        TMP_Text.fontSize = 100;
+        TMP_Text.font = GameBoardEditor.singleton.defaultFont;
 
         TMP_InputField textInput = obj.GetComponent<TMP_InputField>();
         textInput.transition = Selectable.Transition.ColorTint;
@@ -61,7 +65,7 @@ public class URLPanelObject : PanelObject {
         textInput.colors = colors;
 
 
-        textInput.textComponent = textObj.GetComponent<TextMeshProUGUI>();
+        textInput.textComponent = TMP_Text;
         textInput.textViewport = rect;
         textInput.GetComponent<RawImage>().color = new Color(0, 0, 0, 0.2f);
 

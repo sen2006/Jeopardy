@@ -13,7 +13,7 @@ namespace PurrLobby
         
         public void Init(string roomId)
         {
-            _roomId = roomId;
+            _roomId = CodeConverter.toString(ulong.Parse(roomId));
             codeText.text = _roomId;
         }
 

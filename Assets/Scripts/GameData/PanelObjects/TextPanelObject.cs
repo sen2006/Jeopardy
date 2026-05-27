@@ -18,6 +18,7 @@ public class TextPanelObject : PanelObject {
 
         TextMeshProUGUI textMesh = obj.GetComponent<TextMeshProUGUI>();
         textMesh.text = text;
+        textMesh.font = GameManager.singleton.defaultFont;
         textMesh.fontSize = 100;
         return obj;
     }
@@ -38,7 +39,9 @@ public class TextPanelObject : PanelObject {
         rectText.anchoredPosition = Vector2.zero;
         rectText.sizeDelta = new Vector2(objWidth, 125);
 
-        textObj.GetComponent<TextMeshProUGUI>().fontSize = 100;
+        TextMeshProUGUI TMP_Text = textObj.GetComponent<TextMeshProUGUI>();
+        TMP_Text.fontSize = 100;
+        TMP_Text.font = GameBoardEditor.singleton.defaultFont;
 
         TMP_InputField textInput = obj.GetComponent<TMP_InputField>();
         textInput.lineType = TMP_InputField.LineType.MultiLineNewline;
@@ -53,10 +56,10 @@ public class TextPanelObject : PanelObject {
         colors.disabledColor = new Color(0, 0, 0, 0);
         colors.colorMultiplier = 1;
 
+
         textInput.colors = colors;
 
-
-        textInput.textComponent = textObj.GetComponent<TextMeshProUGUI>();
+        textInput.textComponent = TMP_Text;
         textInput.textViewport = rect;
         textInput.scrollSensitivity = 0;
         textInput.GetComponent<RawImage>().color = new Color(0, 0, 0, 0.2f);
