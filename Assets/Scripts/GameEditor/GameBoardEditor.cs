@@ -25,6 +25,7 @@ public class GameBoardEditor : MonoBehaviour, IPanelLoader {
     [SerializeField] GameObject panelEditorButtons;
     [SerializeField] TMP_InputField boardTitleInput;
     [SerializeField] TextMeshProUGUI questionCashDisplay;
+    [SerializeField] public TMP_FontAsset defaultFont;
 
     [Header("Prefabs")]
     [SerializeField] GameObject categoryPrefab;
@@ -34,7 +35,7 @@ public class GameBoardEditor : MonoBehaviour, IPanelLoader {
     
     [Header("Loaded Data Debug")]
     [SerializeField] string gameDataSaveLocation;
-    /*[SerializeField]*/GameData gameData;
+    [SerializeField] GameData gameData;
 
     QuestionData currentlyLoadedQuestion;
     int selectedQuestionPanelIndex = 0;

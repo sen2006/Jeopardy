@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4a1c5ac8ddbbfce4ab601f550eced761
+guid: 3af1ead7be5d78f49940f546b2598bdf
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - January Snack
+  - Alphakind
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

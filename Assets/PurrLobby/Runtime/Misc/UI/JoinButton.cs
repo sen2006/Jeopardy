@@ -17,9 +17,11 @@ namespace PurrLobby
                 Debug.LogWarning($"Can't start join, room ID is empty.");
                 return;
             }
+
+            ulong longId = CodeConverter.toUlong(roomIdInput.text);
             
             onStartJoin?.Invoke();
-            lobbyManager.JoinLobby(roomIdInput.text);
+            lobbyManager.JoinLobby(longId.ToString());
         }
     }
 }
