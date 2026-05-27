@@ -90,6 +90,7 @@ public class GameBoardEditor : MonoBehaviour, IPanelLoader {
     public void CreateGame(string fileName) {
         gameDataSaveLocation = fileName;
         gameData = new();
+        gameData.setName(fileName);
         SaveAndRenderBoard(0);
     }
 
@@ -254,8 +255,9 @@ public class GameBoardEditor : MonoBehaviour, IPanelLoader {
         //ShowExplorer(saveFileNameInput.text);
     }
 
-    public void LoadFromFile(String filename) {
+    public void LoadFromFile(string filename) {
         gameData = new();
+        gameData.setName(filename);
         gameData.Load(SaveSystem.Load(filename));
         gameDataSaveLocation = filename;
         OpenBoard(0);

@@ -4,8 +4,8 @@ using UnityEngine;
 
 [Serializable]
 public class GameData : ISaveSerialization<GameSaveData> {
-    [SerializeField]
-    List<BoardData> boards = new List<BoardData>();
+    [SerializeField] string name = "board" ;
+    [SerializeField] List<BoardData> boards = new List<BoardData>();
     
     public BoardData AddNewBoard() {
         BoardData board = new BoardData();
@@ -32,7 +32,9 @@ public class GameData : ISaveSerialization<GameSaveData> {
     }
 
     public string GetGameName() {
-        return "Game Name";
+        if (name == null)
+            return "unnamed";
+        return name;
     }
 
     public static int GetStartingCash() {
@@ -42,6 +44,8 @@ public class GameData : ISaveSerialization<GameSaveData> {
     public GameSaveData Save() {
         GameSaveData saveData = new GameSaveData();
 
+        saveData.name = name;
+
         List<BoardSaveData> boardSave = ISaveSerialization<BoardSaveData>.ConvertListToSave(boards);
 
         saveData.boards = boardSave;
@@ -49,6 +53,7 @@ public class GameData : ISaveSerialization<GameSaveData> {
     }
 
     public void Load(GameSaveData saveData) {
+        name = saveData.name;
         boards = ISaveSerialization<BoardSaveData>.ConvertListFromSave<BoardData>(saveData.boards, typeof(BoardData));
     }
 
@@ -56,9 +61,14 @@ public class GameData : ISaveSerialization<GameSaveData> {
         if (boards.Count >0)
             boards.RemoveAt(selectedBoardIndex);
     }
+
+    internal void setName(string newName) {
+        name = newName;
+    }
 }
 
 [Serializable]
 public struct GameSaveData {
+    public string name;
     public List<BoardSaveData> boards;
 }
