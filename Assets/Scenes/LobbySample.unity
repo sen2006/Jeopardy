@@ -2953,7 +2953,6 @@ GameObject:
   - component: {fileID: 1025945785}
   - component: {fileID: 1025945787}
   - component: {fileID: 1025945784}
-  - component: {fileID: 1025945788}
   m_Layer: 5
   m_Name: Join
   m_TagString: Untagged
@@ -3088,23 +3087,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0591e32fc18ffda4e954af1fc71e1a7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1025945788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1025945782}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b31b403401f0f440ad331d0f4a465f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::JoinButton
   roomIdInput: {fileID: 188598338}
   lobbyManager: {fileID: 1097043115}
   onStartJoin:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1267779088}
+        m_TargetAssemblyTypeName: PurrLobby.ViewManager, PurrNetLobbySetup
+        m_MethodName: OnJoiningRoom
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &1049940880
 GameObject:
   m_ObjectHideFlags: 0
@@ -4874,7 +4873,7 @@ MonoBehaviour:
   OnViewHide:
     m_PersistentCalls:
       m_Calls: []
-  codeButton: {fileID: 0}
+  codeButton: {fileID: 1724632833}
   lobbyManager: {fileID: 1097043115}
 --- !u!225 &1295349078
 CanvasGroup:
@@ -5452,7 +5451,7 @@ GameObject:
   - component: {fileID: 1724632836}
   - component: {fileID: 1724632835}
   - component: {fileID: 1724632834}
-  - component: {fileID: 1724632837}
+  - component: {fileID: 1724632833}
   m_Layer: 5
   m_Name: Code
   m_TagString: Untagged
@@ -5480,6 +5479,19 @@ RectTransform:
   m_AnchoredPosition: {x: 242.51001, y: 172.78003}
   m_SizeDelta: {x: 439.651, y: 83.68701}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1724632833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1724632831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92d9e0cbe160d0b4485295e71d66e790, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  codeText: {fileID: 1972055198}
 --- !u!114 &1724632834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5524,7 +5536,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1724632833}
         m_TargetAssemblyTypeName: PurrLobby.CodeButton, PurrNetLobbySetup
         m_MethodName: CopyCode
         m_Mode: 1
@@ -5574,19 +5586,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1724632831}
   m_CullTransparentMesh: 1
---- !u!114 &1724632837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1724632831}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22624f28eb477424da350dd428f1d1a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CodeButton
-  codeText: {fileID: 1972055198}
 --- !u!1 &1740937618
 GameObject:
   m_ObjectHideFlags: 0
@@ -6597,6 +6596,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0591e32fc18ffda4e954af1fc71e1a7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roomIdInput: {fileID: 1202227795}
+  lobbyManager: {fileID: 1097043115}
+  onStartJoin:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1267779088}
+        m_TargetAssemblyTypeName: PurrLobby.ViewManager, PurrNetLobbySetup
+        m_MethodName: OnJoiningRoom
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1938136731
 MonoBehaviour:
   m_ObjectHideFlags: 0
